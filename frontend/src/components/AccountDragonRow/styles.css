@@ -1,0 +1,20 @@
+.edit-fields{
+    width:250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label{
+    font-size: 1rem;
+}
+
+input{
+    width:160px;
+    font-size: 1rem;
+}

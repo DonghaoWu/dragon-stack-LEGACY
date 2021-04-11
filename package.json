@@ -1,0 +1,30 @@
+{
+  "name": "dragon-stack-heroku",
+  "version": "1.0.0",
+  "description": "PERN stack application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix frontend",
+    "server": "npm run configure-dev --prefix backend",
+    "database": "npm run configure --prefix backend",
+    "express": "npm run dev --prefix backend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonghaoWu/dragon-stack-heroku.git"
+  },
+  "keywords": [
+    "PERN"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DonghaoWu/dragon-stack-heroku/issues"
+  },
+  "homepage": "https://github.com/DonghaoWu/dragon-stack-heroku#readme",
+  "dependencies": {
+    "concurrently": "^6.0.1"
+  }
+}
