@@ -10,7 +10,7 @@
     "database": "npm run configure --prefix backend",
     "express": "npm run dev --prefix backend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-prebuild": "cd backend && npm run configure && npm install",
+    "heroku-prebuild": "cd backend && npm install && npm run configure",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "repository": {
