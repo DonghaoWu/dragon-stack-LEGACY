@@ -4,15 +4,15 @@ export PGPASSWORD='12345'
 
 echo "Configuring dragonstackdb..."
 
-dropdb -U noah dragonstackdb
-createdb -U noah dragonstackdb
+dropdb dragonstackdb
+createdb dragonstackdb
 
-psql -U noah dragonstackdb < ./bin/sql/account.sql
-psql -U noah dragonstackdb < ./bin/sql/generation.sql
-psql -U noah dragonstackdb < ./bin/sql/dragon.sql
-psql -U noah dragonstackdb < ./bin/sql/trait.sql
-psql -U noah dragonstackdb < ./bin/sql/dragonTrait.sql
-psql -U noah dragonstackdb < ./bin/sql/accountDragon.sql
+psql dragonstackdb < ./bin/sql/account.sql
+psql dragonstackdb < ./bin/sql/generation.sql
+psql dragonstackdb < ./bin/sql/dragon.sql
+psql dragonstackdb < ./bin/sql/trait.sql
+psql dragonstackdb < ./bin/sql/dragonTrait.sql
+psql dragonstackdb < ./bin/sql/accountDragon.sql
 
 node ./bin/insertTraits.js
 
