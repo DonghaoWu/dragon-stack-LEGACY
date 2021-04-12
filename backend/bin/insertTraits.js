@@ -1,6 +1,6 @@
 // const pool = require("../databasePool");
-// const TRAITS = require("../data/traits.json");
-
+const TRAITS = require("../data/traits.json");
+require('dotenv').config();
 const { Client } = require('pg');
 
 const client = new Client({
