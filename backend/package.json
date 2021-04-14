@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./bin/server.js",
     "start": "node ./bin/server.js",
-    "configure": "./bin/configure_db_local.sh",
+    "configure-heroku": "sh ./bin/configure_db_heroku.sh",
+    "configure": "sh ./bin/configure_db_local.sh",
     "configure-dev": "npm run configure && npm run dev"
   },
   "author": "",
