@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const path = require('path');
-
 const dragonRouter = require('./api/dragon');
 const generationRouter = require('./api/generation');
 const accountRouter = require('./api/account');
@@ -35,8 +33,12 @@ app.use((err, req, res, next) => {
 })
 
 const ENV = process.env.NODE_ENV;
+const path = require('path');
+
+console.log(process.env.NODE_ENV)
 
 if(ENV === 'production'){
+    console.log(ENV)
     app.use(express.static(path.join(__dirname, '../../frontend/build')));
     app.use((req,res)=>{
         res.sendFile(path.join(__dirname,'../../frontend/build/index.html'))
