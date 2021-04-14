@@ -1,14 +1,9 @@
 const TRAITS = require("../data/traits.json");
-const { Client } = require('pg');
-
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
-});
+const client = require("../databaseClient-heroku");
 
 client.connect();
+
+let curNum = 0;
 
 TRAITS.map(TRAIT => {
     const traitType = TRAIT.type;
@@ -20,10 +15,13 @@ TRAITS.map(TRAIT => {
             [traitType, traitValue],
             (error, res) => {
                 if (error) console.error(error);
+                curNum++;
                 const traitId = res.rows[0].id;
                 console.log(`Inserted trait - id: ${traitId}`);
+                if(curNum === 16){
+                    client.end();
+                }
             }
         )
     })
-})
-
+});
