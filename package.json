@@ -12,7 +12,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start": "npm start --prefix backend",
     "heroku-prebuild": "cd backend && npm install",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "configure-db-heroku":"sh configure_db_heroku.sh"
   },
   "repository": {
     "type": "git",
