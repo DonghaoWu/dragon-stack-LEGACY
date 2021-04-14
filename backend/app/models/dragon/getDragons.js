@@ -3,7 +3,10 @@ const DragonTable = require("./table");
 const DragonTraitTable = require('../dragonTrait/table');
 const Dragon = require('./index');
 
+const client = require("../../../databaseClient-heroku");
+
 const getWholeDragon = ({ dragonId, accountId }) => {
+    client.connect();
     return Promise.all([
         DragonTable.getDragonWithoutTraits({ dragonId }),
         DragonTraitTable.getDragonTraits({ dragonId })
@@ -26,8 +29,9 @@ const getWholeDragon = ({ dragonId, accountId }) => {
 }
 
 const getPublicDragons = () => {
+    client.connect();
     return new Promise((resolve, reject) => {
-        pool.query(
+        client.query(
             `SELECT dragon.id, "accountId"
             FROM dragon
             INNER JOIN accountDragon
@@ -49,7 +53,7 @@ const getPublicDragons = () => {
                         })
                         .catch(error => {
                             reject(error)
-                        });
+                        })
                 }
             }
         )

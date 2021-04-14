@@ -1,12 +1,14 @@
 const pool = require('../../../databasePool');
 const TraitTable = require('../trait/table');
 
+const client = require("../../../databaseClient-heroku");
+
 class DragonTraitTable {
     static storeDragonTrait({ dragonId, traitType, traitValue }) {
         return new Promise((resolve, reject) => {
             TraitTable.getTraitId({ traitType, traitValue })
                 .then(({ traitId }) => {
-                    pool.query(
+                    client.query(
                         `INSERT INTO dragonTrait("traitId", "dragonId") VALUES($1, $2)`,
                         [traitId, dragonId],
                         (error, response) => {
@@ -21,7 +23,7 @@ class DragonTraitTable {
 
     static getDragonTraits({ dragonId }) {
         return new Promise((resolve, reject) => {
-            pool.query(
+            client.query(
                 `
                 SELECT "traitType", "traitValue"
                 FROM trait

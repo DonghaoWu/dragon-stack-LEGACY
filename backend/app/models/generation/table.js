@@ -1,9 +1,14 @@
 const pool = require('../../../databasePool');
 
+const client = require("../../../databaseClient-heroku");
+
+client.connect();
+
 class GenerationTable {
     static storeGeneration(generation) {
+
         return new Promise((resolve, reject) => {
-            pool.query('INSERT INTO generation(expiration) VALUES($1) RETURNING id',
+            client.query('INSERT INTO generation(expiration) VALUES($1) RETURNING id',
                 [generation.expiration],
                 (error, response) => {
                     if (error) return reject(error);

@@ -2,12 +2,14 @@ const pool = require('../../../databasePool');
 const DragonTraitTable = require('../dragonTrait/table');
 const Dragon = require('./index');
 
+const client = require("../../../databaseClient-heroku");
+
 class DragonTable {
     static storeDragon(dragon) {
         const { birthdate, nickname, generationId, isPublic, saleValue, sireValue } = dragon;
 
         return new Promise((resolve, reject) => {
-            pool.query(`INSERT INTO dragon(birthdate, nickname, "generationId","isPublic", "saleValue", "sireValue") 
+            client.query(`INSERT INTO dragon(birthdate, nickname, "generationId","isPublic", "saleValue", "sireValue") 
                         VALUES($1, $2, $3, $4, $5, $6) RETURNING id`,
                 [birthdate, nickname, generationId, isPublic, saleValue, sireValue],
                 (error, response) => {
@@ -19,7 +21,7 @@ class DragonTable {
                         return DragonTraitTable.storeDragonTrait({ dragonId, traitType, traitValue })
                     }))
                         .then(() => resolve({ dragonId }))
-                        .catch(error => reject(error));
+                        .catch(error => reject(error))
                 }
             )
         })
@@ -27,7 +29,7 @@ class DragonTable {
 
     static getDragonWithoutTraits({ dragonId }) {
         return new Promise((resolve, reject) => {
-            pool.query(
+            client.query(
                 `SELECT birthdate, nickname, "generationId", "isPublic", "saleValue", "sireValue" FROM dragon WHERE dragon.id=$1`,
                 [dragonId],
                 (error, response) => {
@@ -47,7 +49,7 @@ class DragonTable {
         const validQueries = Object.entries(settingsMap).filter(([settingKey, settingValue]) => {
             if (settingValue !== undefined) {
                 return new Promise((resolve, reject) => {
-                    pool.query(
+                    client.query(
                         `UPDATE dragon SET "${settingKey}" = $1 WHERE id = $2`,
                         [settingValue, dragonId],
                         (error, response) => {

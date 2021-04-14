@@ -1,14 +1,17 @@
 const pool = require('../../../databasePool');
 const { STARTING_BALANCE } = require('../../config');
 
+const client = require("../../../databaseClient-heroku");
+
 class AccountTable {
     static storeAccount({ usernameHash, passwordHash }) {
         return new Promise((resolve, reject) => {
-            pool.query(`INSERT INTO account("usernameHash", "passwordHash", balance) 
+            client.query(`INSERT INTO account("usernameHash", "passwordHash", balance) 
                         VALUES($1, $2, $3)`,
                 [usernameHash, passwordHash, STARTING_BALANCE],
                 (error, response) => {
                     if (error) return reject(error);
+
                     resolve();
                 }
             )
@@ -17,7 +20,7 @@ class AccountTable {
 
     static getAccount({ usernameHash }) {
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT id, "passwordHash", "sessionId", balance FROM account
+            client.query(`SELECT id, "passwordHash", "sessionId", balance FROM account
             WHERE "usernameHash" = $1`,
                 [usernameHash],
                 (error, response) => {
@@ -33,7 +36,7 @@ class AccountTable {
 
     static updateSessionId({ sessionId, usernameHash }) {
         return new Promise((resolve, reject) => {
-            pool.query(`UPDATE account SET "sessionId"=$1 WHERE "usernameHash" = $2`,
+            client.query(`UPDATE account SET "sessionId"=$1 WHERE "usernameHash" = $2`,
                 [sessionId, usernameHash],
                 (error, response) => {
                     if (error) return reject(error);
@@ -46,7 +49,7 @@ class AccountTable {
 
     static updateBalance({ accountId, value }) {
         return new Promise((resolve, reject) => {
-            pool.query(`UPDATE account SET "balance"= balance + $1 WHERE "id" = $2`,
+            client.query(`UPDATE account SET "balance"= balance + $1 WHERE "id" = $2`,
                 [value, accountId],
                 (error, response) => {
                     if (error) return reject(error);
